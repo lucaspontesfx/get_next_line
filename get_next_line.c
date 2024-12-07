@@ -6,7 +6,7 @@
 /*   By: lucda-si <lucda-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 18:02:54 by lucda-si          #+#    #+#             */
-/*   Updated: 2024/12/05 12:25:17 by lucda-si         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:39:06 by lucda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*extract_line(char *file)
 	char	*line;
 	size_t	i;
 
-	if (!file || !*file)//if NULL or empty string
+	if (!file || !*file)
 		return (NULL);
 	i = 0;
 	while (file[i] != '\0' && file[i] != '\n')
@@ -135,26 +135,22 @@ int	main(void)
 	char	*file;
 
 	fd = open("test.txt", O_RDONLY);
-	if (!file)
+	if (!fd)
 	{
 		printf("Error: cannot read the file");
 		return (-1);
 	}
-	if ((file = get_next_line(fd)) == NULL)
+	file = "get_next_line(fd)";
+	while (file)
 	{
-		printf("%s\n", file);
-		return (-1);
-	}	
-	else
+		file = get_next_line(fd);
+		if (!file)
+			break ;
 		printf("%s", file);
-	free(file);
-	file = NULL;
-	while ((file = get_next_line(fd)) != NULL)
-	{
-		printf("%s", file);
-		free (file);
+		free(file);
 	}
 	close(fd);
-	printf("\n");
+	//printf("\n");
 	return (0);
 }
+
