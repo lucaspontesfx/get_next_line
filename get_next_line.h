@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucda-si <lucda-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 19:05:47 by lucda-si          #+#    #+#             */
-/*   Updated: 2024/12/05 11:08:20 by lucda-si         ###   ########.fr       */
+/*   Created: 2024/12/08 19:37:57 by lucda-si          #+#    #+#             */
+/*   Updated: 2024/12/08 22:05:46 by lucda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stddef.h>
+# include <stdio.h>
 
 char	*get_next_line(int fd);
+char	*ft_strdup(const char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strjoin(const char *s1, const char *s2);
-void	ft_bzero(void *str, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
-size_t	ft_strlen(const char *s);
+size_t	ft_strlen(const char *str);
 
 #endif

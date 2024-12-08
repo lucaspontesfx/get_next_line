@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucda-si <lucda-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 20:03:25 by lucda-si          #+#    #+#             */
-/*   Updated: 2024/12/05 10:59:55 by lucda-si         ###   ########.fr       */
+/*   Created: 2024/12/08 20:12:10 by lucda-si          #+#    #+#             */
+/*   Updated: 2024/12/08 22:07:43 by lucda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,42 @@ size_t	ft_strlen(const char *str)
 		len++;
 	}
 	return (len);
+}
+
+char	*ft_strdup(const char *str)
+{
+	size_t	i;
+	size_t	len;
+	char	*res;
+
+	len = ft_strlen(str);
+	res = (char *)malloc(sizeof(char) * (len + 1));
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		res[i] = str[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
+char	*ft_strchr(const char *str, int c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
+		i++;
+	}
+	if ((char)c == '\0')
+		return ((char *)&str[i]);
+	return (NULL);
 }
 
 char	*ft_strjoin(const char *s1, const char *s2)
@@ -51,43 +87,23 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	return (res);
 }
 
-void	ft_bzero(void *str, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n)
-	{
-		((char *)str)[i] = 0;
-		i++;
-	}
-}
-
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
+	size_t	total;
+	size_t	i;
 
 	if ((nmemb > 2147483647 && size != 0) || (size > 2147483647 && nmemb != 0))
 		return (0);
 	ptr = malloc(nmemb * size);
 	if (!ptr)
 		return (NULL);
-	ft_bzero(ptr, nmemb * size);
-	return (ptr);
-}
-
-char	*ft_strchr(const char *str, int c)
-{
-	int	i;
-
+	total = nmemb * size;
 	i = 0;
-	while (str[i] != '\0')
+	while (i < total)
 	{
-		if (str[i] == (char)c)
-			return ((char *)&str[i]);
+		((char *)ptr)[i] = 0;
 		i++;
 	}
-	if ((char)c == '\0')
-		return ((char *)&str[i]);
-	return (NULL);
+	return (ptr);
 }

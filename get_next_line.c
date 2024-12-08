@@ -5,35 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucda-si <lucda-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/04 18:02:54 by lucda-si          #+#    #+#             */
-/*   Updated: 2024/12/06 17:39:06 by lucda-si         ###   ########.fr       */
+/*   Created: 2024/12/08 19:36:06 by lucda-si          #+#    #+#             */
+/*   Updated: 2024/12/08 22:04:27 by lucda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-char	*ft_strdup(const char *str)
-{
-	size_t	i;
-	size_t	len;
-	char	*res;
-
-	len = ft_strlen(str);
-	res = (char *)malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (str[i])
-	{
-		res[i] = str[i];
-		i++;
-	}
-	res[i] = '\0';
-	return (res);
-}
-
-char	*next_line(char *file)
+char	*update_file(char *file)
 {
 	char	*line;
 	size_t	i;
@@ -87,7 +66,7 @@ char	*extract_line(char *file)
 	return (line);
 }
 
-char	*read_file(int fd, char *file)
+char	*init_file(int fd, char *file)
 {
 	char	*buffer;
 	char	*tmp;
@@ -95,11 +74,11 @@ char	*read_file(int fd, char *file)
 
 	if (!file)
 		file = ft_strdup("");
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (free(file), NULL);
 	b_read = 1;
-	while (!ft_strchr(file, '\n') && b_read > 0)
+	while (b_read > 0 && !ft_strchr(file, '\n'))
 	{
 		b_read = read(fd, buffer, BUFFER_SIZE);
 		if (b_read == -1)
@@ -111,7 +90,8 @@ char	*read_file(int fd, char *file)
 		free(file);
 		file = tmp;
 	}
-	return (free(buffer), file);
+	free(buffer);
+	return (file);
 }
 
 char	*get_next_line(int fd)
@@ -121,36 +101,36 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	file = read_file(fd, file);
+	file = init_file(fd, file);
 	if (!file)
 		return (NULL);
 	line = extract_line(file);
-	file = next_line(file);
+	file = update_file(file);
 	return (line);
 }
-
+/*
 int	main(void)
 {
 	int	fd;
-	char	*file;
-
+	char	*res;
+	
 	fd = open("test.txt", O_RDONLY);
-	if (!fd)
+
+	if (fd < 0)
 	{
-		printf("Error: cannot read the file");
+		printf("Error: cannot read file");
 		return (-1);
 	}
-	file = "get_next_line(fd)";
-	while (file)
+	res = "init";
+	while (res)
 	{
-		file = get_next_line(fd);
-		if (!file)
+		res = get_next_line(fd);
+		if (!res)
 			break ;
-		printf("%s", file);
-		free(file);
+		printf("%s", res);
+		free(res);
 	}
 	close(fd);
-	//printf("\n");
-	return (0);
+	return(0);
 }
-
+*/
