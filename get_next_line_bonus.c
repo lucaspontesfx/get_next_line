@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lucda-si <lucda-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:16:29 by lucda-si          #+#    #+#             */
-/*   Updated: 2024/12/11 17:33:51 by lucda-si         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:35:44 by lucda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next(char	*file)
 {
@@ -97,39 +97,53 @@ static char	*read_file(int fd, char *file)
 
 char	*get_next_line(int fd)
 {
-	static char	*file;
+	static char	*file[1024];
 	char		*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > 1023)
 		return (NULL);
-	file = read_file(fd, file);
-	if (!file)
+	file[fd] = read_file(fd, file[fd]);
+	if (!file[fd])
 		return (NULL);
-	line = extract_line(file);
-	file = get_next(file);
+	line = extract_line(file[fd]);
+	file[fd] = get_next(file[fd]);
 	return (line);
 }
+
 /*
+#include "get_next_line_bonus.h"
+#include <stdio.h>
+
 int	main(void)
 {
-	char	*line;
-	int		fd;
+	int		fd1;
+	int		fd2;
+	int		fd3;
 
-	fd = open("test.txt", O_RDONLY);
-	if (fd < 0)
-		return (-1);
+	char	*line;
+	char	*line1;
+	char	*line2;
+	fd1 = open("test.txt", O_RDONLY);
+	fd2 = open("test2.txt", O_RDONLY);
+	fd3 = open("test3.txt", O_RDONLY);
+
 	line = "init";
-	while ((line = get_next_line(fd)) != NULL)
-	{	
-		printf("%s", line);
+	line1 = "init";
+	line2 = "init";
+	while (line && line1 && line2)
+	{
+		line = get_next_line(fd1);
+		printf("%s\n", line);
 		free(line);
+		line1 = get_next_line(fd2);
+		printf("%s\n", line);
+		free(line1);
+		line2 = get_next_line(fd3);
+		printf("%s\n", line);
+		free(line2);
+		return (0);
+
 	}
-	close(fd);
-	return (0);
+
 }
-Verification removed that was giving me issues with leak
-if (file[len] == '\n')
-	line = ft_calloc(sizeof(char), (len + 2));
-if (file[len] == '\0')
-	line = ft_calloc(sizeof(char), (len + 1));
 */

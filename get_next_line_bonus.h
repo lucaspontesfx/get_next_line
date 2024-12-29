@@ -6,12 +6,12 @@
 /*   By: lucda-si <lucda-si@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/24 17:18:10 by lucda-si          #+#    #+#             */
-/*   Updated: 2024/12/10 13:40:18 by lucda-si         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:40:50 by lucda-si         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
